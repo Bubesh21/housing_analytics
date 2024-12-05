@@ -1,0 +1,181 @@
+version: 2
+
+snapshots:
+  - name: dim_property_type
+    description: "Property type dimension view based on snapshot"
+    columns:
+      - name: property_type_key
+        description: "Surrogate key for the property type dimension"
+        tests:
+          - unique
+          - not_null
+
+      - name: type_code
+        description: "Original property type code from source"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['br', 'h', 'u', 't', 'dev site', 'o res']
+
+      - name: type_description
+        description: "Full description of the property type"
+        tests:
+          - not_null
+
+      - name: type_category
+        description: "High-level category of the property type"
+        tests:
+          - not_null
+
+      - name: type_subcategory
+        description: "Detailed subcategory of the property type"
+        tests:
+          - not_null
+
+      - name: dbt_valid_from
+        description: "Timestamp when this version became valid"
+        tests:
+          - not_null
+
+      - name: dbt_valid_to
+        description: "Timestamp when this version became invalid"
+
+      - name: dbt_updated_at
+        description: "Timestamp when this record was last updated"
+        tests:
+          - not_null
+
+  - name: dim_sale_method
+    description: "Snapshot table for tracking sale method changes"
+    columns:
+      - name: method_code_key
+        description: "Surrogate key for the method_code dimension"
+        tests:
+          - unique
+          - not_null
+
+      - name: method_code
+        description: "Original method code from source"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['S', 'SP', 'PI', 'PN', 'SN', 'NB', 'VB', 'W', 'SA', 'SS', 'N/A']
+
+      - name: method_description
+        description: "Full description of the sale method"
+        tests:
+          - not_null
+
+      - name: dbt_valid_from
+        description: "Timestamp when this version became valid"
+        tests:
+          - not_null
+
+      - name: dbt_valid_to
+        description: "Timestamp when this version became invalid"
+
+      - name: dbt_updated_at
+        description: "Timestamp when this record was last updated"
+        tests:
+          - not_null
+          
+models:
+  - name: val_housing_price
+    description: "Validated Melbourne housing market data containing property sales information"
+    columns:
+      - name: suburb
+        description: "Name of the suburb where the property is located"
+        tests:
+          - not_null
+
+      - name: address
+        description: "Street address of the property"
+        tests:
+          - not_null
+
+      - name: rooms
+        description: "Total number of rooms in the property"
+        tests:
+          - not_null
+
+      - name: type
+        description: "Property type (h: house, u: unit, t: townhouse)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['br','h','u','t','dev site','o res']
+              severity: error
+
+      - name: price
+        description: "Sale price"
+
+      - name: method
+        description: "Sale method"
+        tests:
+          - accepted_values:
+              values: ['S', 'SP', 'PI', 'PN', 'SN', 'NB', 'VB', 'W', 'SA', 'SS', 'N/A']
+              severity: error
+
+      - name: sellerg
+        description: "Real estate agent"
+
+      - name: date
+        description: "Date of sale"
+        tests:
+          - not_null
+
+      - name: distance
+        description: "Distance from CBD in kilometers"
+
+      - name: postcode
+        description: "Postal code for the property location"
+
+      - name: bedroom2
+        description: "Number of bedrooms"
+        
+      - name: bathroom
+        description: "Number of bathrooms"
+       
+      - name: car
+        description: "Number of car parking spaces"
+        
+      - name: landsize
+        description: "Land size in square meters"
+        
+      - name: buildingarea
+        description: "Building size in square meters"
+        
+      - name: yearbuilt
+        description: "Year the property was built"
+        
+      - name: councilarea
+        description: "Name of the council area"
+        
+      - name: lattitude
+        description: "Property location latitude"
+        
+      - name: longitude
+        description: "Property location longitude"
+        
+      - name: regionname
+        description: "Name of the region"
+        
+      - name: propertycount
+        description: "Number of properties in the suburb"
+        
+      - name: source_1
+        description: "Primary source file identifier"
+
+      - name: source_2
+        description: "Secondary source file identifier"
+
+      - name: insert_datetime
+        description: "Timestamp when the record was inserted"
+        tests:
+          - not_null
+
+      - name: batch_id
+        description: "Unique identifier for the load batch"
+        tests:
+          - not_null
+        

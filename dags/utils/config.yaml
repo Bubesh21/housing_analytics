@@ -1,0 +1,13 @@
+snowflake:
+  user: "bubesh21"
+  password: "Bubesh@21"
+  account: "YCOHYKK-FC38016"
+  warehouse: "compute_wh"
+  database: "housing"
+  schema: "RAW"
+  target_table_name: "RAW_HOUSING_PRICE"
+
+file_paths:
+  house_price: "/usr/local/airflow/dags/data/MELBOURNE_HOUSE_PRICES_LESS.csv"
+  housing_full: "/usr/local/airflow/dags/data/Melbourne_housing_FULL.csv"
+  output_dir: '/usr/local/airflow/dags/output'
